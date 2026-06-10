@@ -50,8 +50,8 @@ A production-ready full-stack SaaS application that analyzes resumes using Claud
 |-----------|------------------------------------------------|
 | Frontend  | React 18, TypeScript, Vite, Tailwind CSS, Recharts |
 | Backend   | FastAPI, Python 3.12, SQLAlchemy, Pydantic     |
-| Database  | PostgreSQL 16                                   |
-| AI        | Anthropic Claude (claude-sonnet-4)              |
+| Database  | PostgreSQL 17                                  |
+| AI        | Google  Gemini                                 |
 | Auth      | JWT + bcrypt                                    |
 | Deploy    | Docker, Docker Compose                          |
 
@@ -62,9 +62,9 @@ A production-ready full-stack SaaS application that analyzes resumes using Claud
 ### Prerequisites
 
 - Node.js 20+
-- Python 3.12+
-- PostgreSQL 16
-- An [Anthropic API key](https://console.anthropic.com/)
+- Python 3.11
+- PostgreSQL 17
+- A [Gemini API key](https://console.anthropic.com/)
 
 ---
 
