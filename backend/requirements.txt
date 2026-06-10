@@ -8,11 +8,11 @@ pydantic-settings==2.5.2
 pydantic[email]==2.9.2
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
 python-multipart==0.0.12
-anthropic==0.34.2
 pdfplumber==0.11.4
 PyPDF2==3.0.1
 python-docx==1.1.2
-slowapi==0.1.9
 python-dotenv==1.0.1
+email-validator==2.1.0
 requests==2.32.3
