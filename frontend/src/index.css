@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    border-color: rgba(255,255,255,0.1);
+  }
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased;
+  }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+}
+
+@layer components {
+  .glass {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .card {
+    background: rgb(15,23,42);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 1rem;
+  }
+  .card-hover {
+    transition: border-color 0.2s;
+  }
+  .card-hover:hover {
+    border-color: rgba(255,255,255,0.15);
+  }
+  .btn-primary {
+    @apply bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-4 py-2 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.08);
+    color: rgb(226,232,240);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.12);
+  }
+  .btn-danger {
+    background: rgba(239,68,68,0.15);
+    color: rgb(248,113,113);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(239,68,68,0.2);
+    transition: all 0.2s;
+  }
+  .btn-danger:hover {
+    background: rgba(239,68,68,0.25);
+  }
+  .input {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0.75rem;
+    padding: 0.625rem 1rem;
+    color: rgb(241,245,249);
+    width: 100%;
+    transition: all 0.2s;
+  }
+  .input:focus {
+    outline: none;
+    border-color: rgba(99,102,241,0.5);
+    box-shadow: 0 0 0 2px rgba(99,102,241,0.2);
+  }
+  .input::placeholder {
+    color: rgb(100,116,139);
+  }
+  .label {
+    @apply text-sm font-medium text-slate-400 mb-1.5 block;
+  }
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium;
+  }
+  .badge-green {
+    background: rgba(16,185,129,0.15);
+    color: rgb(52,211,153);
+    border: 1px solid rgba(16,185,129,0.2);
+  }
+  .badge-yellow {
+    background: rgba(245,158,11,0.15);
+    color: rgb(251,191,36);
+    border: 1px solid rgba(245,158,11,0.2);
+  }
+  .badge-red {
+    background: rgba(239,68,68,0.15);
+    color: rgb(248,113,113);
+    border: 1px solid rgba(239,68,68,0.2);
+  }
+  .badge-blue {
+    background: rgba(59,130,246,0.15);
+    color: rgb(96,165,250);
+    border: 1px solid rgba(59,130,246,0.2);
+  }
+  .badge-purple {
+    background: rgba(139,92,246,0.15);
+    color: rgb(167,139,250);
+    border: 1px solid rgba(139,92,246,0.2);
+  }
+}
+
+@keyframes ring-fill {
+  from { stroke-dashoffset: 283; }
+}
+.score-ring {
+  animation: ring-fill 1s ease-out forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fadeIn 0.3s ease-in-out; }
+.animate-slide-up { animation: slideUp 0.3s ease-out; }
+.gradient-text {
+  background: linear-gradient(135deg, #1326da 0%, #3c2653 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
