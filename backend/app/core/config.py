@@ -1,7 +1,6 @@
 from pydantic_settings import BaseSettings
 from typing import List
 import os
-pip install groq
 
 class Settings(BaseSettings):
     # App
