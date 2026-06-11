@@ -1,6 +1,7 @@
 import json
 import re
 import requests
+pip install groq
 from typing import Dict, Any
 from app.core.config import settings
 
@@ -39,30 +40,24 @@ def _sanitize_resume_text(text: str) -> str:
     return sanitized
 
 
-def _call_gemini(prompt: str) -> str:
-    import time
-    headers = {"Content-Type": "application/json"}
-    params = {"key": settings.GEMINI_API_KEY}
-    body = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.3, "maxOutputTokens": 4096},
-        "safetySettings": [
-            {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
-        ]
-    }
-    for attempt in range(3):
-        response = requests.post(
-            GEMINI_URL, headers=headers, params=params, json=body, timeout=60
-        )
-        if response.status_code == 429:
-            time.sleep(30)
-            continue
-        response.raise_for_status()
-        data = response.json()
-        return data["candidates"][0]["content"]["parts"][0]["text"]
-    raise Exception("AI service temporarily unavailable. Please try again in a minute.")
+from groq import Groq
 
+client = Groq(api_key=settings.GROQ_API_KEY)
 
+def _call_ai(prompt: str) -> str:
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        temperature=0.3,
+        response_format={"type": "json_object"}
+    )
+
+    return response.choices[0].message.content
 def _parse_json_response(text: str) -> Dict:
     try:
         return json.loads(text)
@@ -147,7 +142,7 @@ Return ONLY this JSON structure, no other text:
   "summary": "Honest 2-3 sentence assessment of actual resume quality"
 }}"""
 
-    text = _call_gemini(prompt)
+    text = _call_ai(prompt)
     result = _parse_json_response(text)
 
     # Validate and cap scores
