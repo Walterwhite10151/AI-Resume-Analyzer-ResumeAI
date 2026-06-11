@@ -5,8 +5,7 @@ import time
 from typing import Dict, Any
 from app.core.config import settings
 
-GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
-
+GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 def _sanitize_resume_text(text: str) -> str:
     injection_patterns = [
@@ -41,24 +40,26 @@ def _sanitize_resume_text(text: str) -> str:
 
 
 def _call_gemini(prompt: str) -> str:
-    headers = {"Content-Type": "application/json"}
-    params = {"key": settings.GEMINI_API_KEY}
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {settings.GEMINI_API_KEY}"
+    }
     body = {
-        "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.3, "maxOutputTokens": 4096},
+        "model": "llama-3.3-70b-versatile",
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.3,
+        "max_tokens": 4096,
     }
     for attempt in range(3):
         response = requests.post(
-            GEMINI_URL, headers=headers, params=params, json=body, timeout=60
+            GROQ_URL, headers=headers, json=body, timeout=60
         )
         if response.status_code == 429:
-            time.sleep(30)
+            time.sleep(10)
             continue
         response.raise_for_status()
-        data = response.json()
-        return data["candidates"][0]["content"]["parts"][0]["text"]
-    raise Exception("AI service temporarily unavailable. Please try again in a minute.")
-
+        return response.json()["choices"][0]["message"]["content"]
+    raise Exception("AI service temporarily unavailable.")
 
 def _parse_json_response(text: str) -> Dict:
     try:
