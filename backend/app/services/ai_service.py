@@ -106,10 +106,18 @@ def _validate_scores(result: Dict) -> Dict:
 
 def _injection_response_analysis() -> Dict[str, Any]:
     return {
-        "ats_score": 0, "keyword_score": 0, "readability_score": 0,
-        "formatting_score": 0, "overall_score": 0, "skills": [],
-        "experience": [], "education": [], "certifications": [], "projects": [],
-        "existing_keywords": [], "missing_keywords": [],
+        "ats_score": 0,
+        "keyword_score": 0,
+        "readability_score": 0,
+        "formatting_score": 0,
+        "overall_score": 0,
+        "skills": [],
+        "experience": [],
+        "education": [],
+        "certifications": [],
+        "projects": [],
+        "existing_keywords": [],
+        "missing_keywords": [],
         "keyword_density": {"technical": 0, "soft_skills": 0, "action_verbs": 0},
         "strengths": [],
         "weaknesses": [
@@ -170,12 +178,22 @@ def analyze_resume(resume_text: str) -> Dict[str, Any]:
     result = _validate_scores(result)
 
     defaults = {
-        "ats_score": 60, "keyword_score": 55, "readability_score": 65,
-        "formatting_score": 60, "overall_score": 60, "skills": [],
-        "experience": [], "education": [], "certifications": [], "projects": [],
-        "existing_keywords": [], "missing_keywords": [],
+        "ats_score": 60,
+        "keyword_score": 55,
+        "readability_score": 65,
+        "formatting_score": 60,
+        "overall_score": 60,
+        "skills": [],
+        "experience": [],
+        "education": [],
+        "certifications": [],
+        "projects": [],
+        "existing_keywords": [],
+        "missing_keywords": [],
         "keyword_density": {"technical": 0.3, "soft_skills": 0.2, "action_verbs": 0.15},
-        "strengths": [], "weaknesses": [], "recommendations": [],
+        "strengths": [],
+        "weaknesses": [],
+        "recommendations": [],
         "summary": "Resume analyzed successfully.",
     }
     for key, default in defaults.items():
@@ -243,3 +261,17 @@ def job_match_analysis(
                 score = min(score, 92)
             result["match_score"] = max(0, min(100, score))
         except (TypeError, ValueError):
+            result["match_score"] = 50
+
+    defaults = {
+        "match_score": 50,
+        "matching_skills": [],
+        "missing_skills": [],
+        "missing_keywords": [],
+        "suggestions": [],
+        "summary": "Analysis complete.",
+    }
+    for key, default in defaults.items():
+        if key not in result:
+            result[key] = default
+    return result
